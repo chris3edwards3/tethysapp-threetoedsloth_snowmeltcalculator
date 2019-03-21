@@ -84,6 +84,7 @@ require([
 
 	//main function
     function watershed(event) {
+          $("#loadingstuff").html("<h1>LOADING YOUR RESULTS</h1>");
 
           graphicsLayer.removeAll();
           var point = new Point({
@@ -114,6 +115,7 @@ require([
 	}
 
 	function drawResult(data){
+	    $("#loadingstuff").html("");
 	    var polygon_feature = data.value.features[0];
 		polygon_feature.symbol = fillSymbol;
 		graphicsLayer.add(polygon_feature);
