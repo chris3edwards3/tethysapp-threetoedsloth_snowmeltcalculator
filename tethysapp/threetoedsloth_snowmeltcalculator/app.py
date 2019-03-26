@@ -26,22 +26,22 @@ class ThreetoedslothSnowmeltcalculator(TethysAppBase):
         url_maps = (
             UrlMap(
                 name='home',
-                url='threetoedsloth-snowmeltcalculator/home.html',
+                url='threetoedsloth-snowmeltcalculator',
                 controller='threetoedsloth_snowmeltcalculator.controllers.home'
             ),
             UrlMap(
                 name='proposal',
-                url='threetoedsloth-snowmeltcalculator/proposal.html',
+                url='threetoedsloth-snowmeltcalculator/proposal',
                 controller='threetoedsloth_snowmeltcalculator.controllers.proposal'
             ),
             UrlMap(
                 name='mockup',
-                url='threetoedsloth-snowmeltcalculator/mockup.html',
+                url='threetoedsloth-snowmeltcalculator/mockup',
                 controller='threetoedsloth_snowmeltcalculator.controllers.mockup'
             ),
             UrlMap(
                 name='map',
-                url='threetoedsloth-snowmeltcalculator/map.html',
+                url='threetoedsloth-snowmeltcalculator/map',
                 controller='threetoedsloth_snowmeltcalculator.controllers.map'
             )
         )
