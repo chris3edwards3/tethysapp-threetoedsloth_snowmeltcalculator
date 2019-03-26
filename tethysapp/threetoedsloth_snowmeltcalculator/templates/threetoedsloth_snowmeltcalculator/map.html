@@ -1,4 +1,5 @@
 {% extends "threetoedsloth_snowmeltcalculator/base.html" %}
+{% load staticfiles %}
 {% load tethys_gizmos %}
 
 {% block header_buttons %}
@@ -16,6 +17,7 @@
     width: 400px;
   }
 </style>
+
 
 <link rel="stylesheet" href="https://js.arcgis.com/4.6/esri/css/main.css">
 <script src="https://js.arcgis.com/4.6/"></script>
@@ -84,7 +86,7 @@ require([
 
 	//main function
     function watershed(event) {
-          $("#loadingstuff").html("<h1>LOADING YOUR RESULTS</h1>");
+          $("#loadingstuff").html(" <h5>LOADING YOUR RESULTS</h5> ");
 
           graphicsLayer.removeAll();
           var point = new Point({
@@ -134,17 +136,12 @@ require([
 });
 </script>
 
-  <h1>Calculate Watershed Area</h1>
+  <h1>Delineate Watershed</h1>
   <h3>*Click on the Provo River.</h3>
+  <div id="viewDiv"></div>
 
-  <div id="viewDiv">...</div>
 
 {% endblock %}
-
-
-
-
-
 
 
 {# Use the after_app_content block for modals #}
@@ -175,3 +172,5 @@ require([
 
 
 {% endblock %}
+
+
