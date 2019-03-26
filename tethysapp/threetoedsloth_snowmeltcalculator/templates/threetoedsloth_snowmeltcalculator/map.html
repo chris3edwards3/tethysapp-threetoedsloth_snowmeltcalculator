@@ -84,9 +84,12 @@ require([
 	//add map click function
     view.on("click", watershed);
 
+    var featureSet = new FeatureSet();
+    var lat;
+    var lon;
+
 	//main function
     function watershed(event) {
-          $("#loadingstuff").html("<h2 style='text-align: center'>LOADING YOUR RESULTS</h2><img src='https://media.giphy.com/media/3og0INAY5MLmEBubyU/giphy.gif' style='width: 100%'>");
 
           graphicsLayer.removeAll();
           var point = new Point({
@@ -100,14 +103,35 @@ require([
           graphicsLayer.add(inputGraphic);
           var inputGraphicContainer = [];
           inputGraphicContainer.push(inputGraphic);
-          var featureSet = new FeatureSet();
-          featureSet.features = inputGraphicContainer;
 
-		  // input parameters
-          var params = {
+          lat = event.mapPoint.latitude;
+          lon = event.mapPoint.longitude;
+
+          featureSet.features = inputGraphicContainer;
+    }
+
+    // What happens when you click the "Delineate Watershed" Button
+    $(document).ready(function () {
+        $("#delineate").click(function () {
+            processRequest();
+        });
+    });
+
+    function processRequest(){
+
+        if ( isNaN(lat) && isNaN(lon) ) {  // User did not click a point
+            alert("Please choose an outlet point by clicking on the map.");
+
+        } else {
+        // Delineate watershed
+            $("#loadingstuff").html("<h2 style='text-align: center'>LOADING WATERSHED</h2><img src='https://media.giphy.com/media/3og0INAY5MLmEBubyU/giphy.gif' style='width: 100%'>");
+
+            // input parameters
+            var params = {
             "Input_Pour_Point": featureSet,
-          };
-          gp.submitJob(params).then(completeCallback, errBack, statusCallback);
+            };
+            gp.submitJob(params).then(completeCallback, errBack, statusCallback);
+        }
     }
 
 	function completeCallback(result){

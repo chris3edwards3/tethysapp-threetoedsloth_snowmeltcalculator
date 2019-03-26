@@ -24,7 +24,17 @@
   <li class="{% if request.path == proposal_url %}active{% endif %}"><a href="{{ proposal_url }}">Proposal</a></li>
   <li class="{% if request.path == mockup_url %}active{% endif %}"><a href="{{ mockup_url }}">Mockup</a></li>
   <li class="{% if request.path == map_url %}active{% endif %}"><a href="{{ map_url }}">Map</a></li>
+
+  {# Buttons for Map Page #}
+  {% if request.path == map_url %}
+    <br>
+    <button id="delineate" type="button">Delineate Watershed</button>
+
+  {% endif %}
+
   <div id="loadingstuff"></div>
+
+
 
 {% endblock %}
 
