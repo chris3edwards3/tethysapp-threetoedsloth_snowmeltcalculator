@@ -6,7 +6,7 @@ class ThreetoedslothSnowmeltcalculator(TethysAppBase):
     Tethys app class for Three Toed Sloth Snowmelt Calculator.
     """
 
-    name = 'Three-Toed Sloth: Snowmelt Calculator'
+    name = 'Utah Snowmelt Calculator'
     index = 'threetoedsloth_snowmeltcalculator:home'
     icon = 'threetoedsloth_snowmeltcalculator/images/snowicon.png'
     package = 'threetoedsloth_snowmeltcalculator'
