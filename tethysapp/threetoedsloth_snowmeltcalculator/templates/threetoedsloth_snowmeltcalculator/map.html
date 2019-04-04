@@ -23,141 +23,148 @@
 <script src="https://js.arcgis.com/4.6/"></script>
 
 <script>
+    require([
+      "esri/Map",
+      "esri/layers/GraphicsLayer",
+      "esri/Graphic",
+      "esri/geometry/Point",
+      "esri/tasks/Geoprocessor",
+      "esri/tasks/support/LinearUnit",
+      "esri/tasks/support/FeatureSet",
+      "esri/views/MapView",
+      "dojo/domReady!"
+    ], function(Map, GraphicsLayer, Graphic, Point, Geoprocessor, LinearUnit, FeatureSet, MapView){
 
-require([
-  "esri/Map",
-  "esri/layers/GraphicsLayer",
-  "esri/Graphic",
-  "esri/geometry/Point",
-  "esri/tasks/Geoprocessor",
-  "esri/tasks/support/LinearUnit",
-  "esri/tasks/support/FeatureSet",
-  "esri/views/MapView",
-  "dojo/domReady!"
-], function(Map, GraphicsLayer, Graphic, Point, Geoprocessor, LinearUnit, FeatureSet, MapView){
-
-	//a map with basemap
-	var map = new Map({
-    basemap: "streets"
-	});
-
-    //a graphics layer to show input point and output polygon
-    var graphicsLayer = new GraphicsLayer();
-    map.add(graphicsLayer);
-
-    var view = new MapView({
-    container: "viewDiv",
-    map: map,
-	center: [-111.643245, 40.324884],
-	zoom: 11
-    });
-
-	// symbol for input point
-	var markerSymbol = {
-          type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-          color: [0, 255, 255],
-          outline: { // autocasts as new SimpleLineSymbol()
-            color: [0, 122, 122],
-            width: 2
-          }
-        };
-
-	// symbol for watershed boundary
-    var fillSymbol = {
-          type: "simple-fill", // autocasts as new SimpleFillSymbol()
-          color: [226, 119, 40, 0.75],
-          outline: { // autocasts as new SimpleLineSymbol()
-            color: [255, 255, 255],
-            width: 1
-          }
-        };
-
-	// Geoprocessing service url
-	var gpUrl = "http://geoserver2.byu.edu/arcgis/rest/services/3_Toed_Sloth/Watershed/GPServer/Watershed";
-
-    // create a new Geoprocessor
-	var gp = new Geoprocessor(gpUrl);
-	// define output spatial reference
-    gp.outSpatialReference = { // autocasts as new SpatialReference()
-          wkid: 102100 //EPSG3857
-        };
-	//add map click function
-    view.on("click", watershed);
-
-    var featureSet = new FeatureSet();
-    var lat;
-    var lon;
-
-	//main function
-    function watershed(event) {
-
-          graphicsLayer.removeAll();
-          var point = new Point({
-            longitude: event.mapPoint.longitude,
-            latitude: event.mapPoint.latitude
-          });
-          var inputGraphic = new Graphic({
-            geometry: point,
-            symbol: markerSymbol
-          });
-          graphicsLayer.add(inputGraphic);
-          var inputGraphicContainer = [];
-          inputGraphicContainer.push(inputGraphic);
-
-          lat = event.mapPoint.latitude;
-          lon = event.mapPoint.longitude;
-
-          featureSet.features = inputGraphicContainer;
-    }
-
-    // What happens when you click the "Delineate Watershed" Button
-    $(document).ready(function () {
-        $("#delineate").click(function () {
-            processRequest();
+        //a map with basemap
+        var map = new Map({
+        basemap: "streets"
         });
-    });
 
-    function processRequest(){
+        //a graphics layer to show input point and output polygon
+        var graphicsLayer = new GraphicsLayer();
+        map.add(graphicsLayer);
 
-        if ( isNaN(lat) && isNaN(lon) ) {  // User did not click a point
-            alert("Please choose an outlet point by clicking on the map.");
+        var view = new MapView({
+        container: "viewDiv",
+        map: map,
+        center: [-111.643245, 40.324884],
+        zoom: 11
+        });
 
-        } else {
-        // Delineate watershed
-            $("#loadingstuff").html("<h2 style='text-align: center'>LOADING WATERSHED</h2><img src='https://media.giphy.com/media/3og0INAY5MLmEBubyU/giphy.gif' style='width: 100%'>");
-
-            // input parameters
-            var params = {
-            "Input_Pour_Point": featureSet,
+        // symbol for input point
+        var markerSymbol = {
+              type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+              color: [0, 255, 255],
+              outline: { // autocasts as new SimpleLineSymbol()
+                color: [0, 122, 122],
+                width: 2
+              }
             };
-            gp.submitJob(params).then(completeCallback, errBack, statusCallback);
+
+        // symbol for watershed boundary
+        var fillSymbol = {
+              type: "simple-fill", // autocasts as new SimpleFillSymbol()
+              color: [53, 172, 242, 0.70],
+              outline: { // autocasts as new SimpleLineSymbol()
+                color: [255, 255, 255],
+                width: 1
+              }
+            };
+
+        // Geoprocessing service url
+        var gpUrl = "http://geoserver2.byu.edu/arcgis/rest/services/3_Toed_Sloth/Snowmelt_Calculator/GPServer/Snowmelt_Calculator";
+
+        // create a new Geoprocessor
+        var gp = new Geoprocessor(gpUrl);
+        // define output spatial reference
+        gp.outSpatialReference = { // autocasts as new SpatialReference()
+              wkid: 102100 //EPSG3857
+            };
+        //add map click function
+        view.on("click", watershed);
+
+        var featureSet = new FeatureSet();
+        var lat;
+        var lon;
+
+        //main function
+        function watershed(event) {
+
+              graphicsLayer.removeAll();
+              var point = new Point({
+                longitude: event.mapPoint.longitude,
+                latitude: event.mapPoint.latitude
+              });
+              var inputGraphic = new Graphic({
+                geometry: point,
+                symbol: markerSymbol
+              });
+              graphicsLayer.add(inputGraphic);
+              var inputGraphicContainer = [];
+              inputGraphicContainer.push(inputGraphic);
+
+              lat = event.mapPoint.latitude;
+              lon = event.mapPoint.longitude;
+
+              featureSet.features = inputGraphicContainer;
         }
-    }
 
-	function completeCallback(result){
+        // What happens when you click the "Delineate Watershed" Button
+        $(document).ready(function () {
+            $("#delineate").click(function () {
+                processRequest();
+            });
+        });
 
-        gp.getResultData(result.jobId, "Output_Watershed_Boundary").then(drawResult, drawResultErrBack);
+        function processRequest(){
 
-	}
+            if ( isNaN(lat) && isNaN(lon) ) {  // User did not click a point
+                alert("Please choose an outlet point by clicking on the map.");
 
-	function drawResult(data){
-	    $("#loadingstuff").html("");
-	    var polygon_feature = data.value.features[0];
-		polygon_feature.symbol = fillSymbol;
-		graphicsLayer.add(polygon_feature);
-	}
+            } else {
+            // Delineate watershed
+                $("#loadingstuff").html("<h2 style='text-align: center'>LOADING WATERSHED</h2><img src='https://media.giphy.com/media/3og0INAY5MLmEBubyU/giphy.gif' style='width: 100%'>");
 
-	function drawResultErrBack(err) {
-        console.log("draw result error: ", err);
-    }
+                // input parameters
+                var params = {
+                "Input_Pour_Point": featureSet,
+                };
+                gp.submitJob(params).then(completeCallback, errBack, statusCallback);
+            }
+        }
 
-	function statusCallback(data) {
-        console.log(data.jobStatus);
-    }
-    function errBack(err) {
-        console.log("gp error: ", err);
-    }
-});
+        function completeCallback(result){
+            <!--console.log(result);-->
+            gp.getResultData(result.jobId, "Output_Watershed_Boundary").then(drawResult, drawResultErrBack);
+        }
+
+        function drawResult(data){
+            $("#loadingstuff").html("");
+            alert("About to draw stuff");
+            var polygon_feature = data.value.features[0];
+
+            var avgdepth = data.value.features[0].attributes['Mean'];
+            console.log(avgdepth)
+            var area = data.value.features[0].attributes['SHAPE_Area'];
+            console.log(area)
+            var volAcFt = avgdepth*area/1000/1233.48;
+            console.log(volAcFt)
+
+            polygon_feature.symbol = fillSymbol;
+            graphicsLayer.add(polygon_feature);
+        }
+
+        function drawResultErrBack(err) {
+            console.log("draw result error: ", err);
+        }
+
+        function statusCallback(data) {
+            console.log(data.jobStatus);
+        }
+        function errBack(err) {
+            console.log("gp error: ", err);
+        }
+    });
 </script>
 
   <h1>Delineate Watershed</h1>
