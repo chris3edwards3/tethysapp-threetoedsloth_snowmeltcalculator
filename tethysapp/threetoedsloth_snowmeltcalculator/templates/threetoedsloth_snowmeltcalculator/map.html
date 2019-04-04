@@ -14,7 +14,7 @@
     padding: 0;
     margin: 0;
     height: 550px;
-    width: 1100px;
+    width: 100%;
   }
 </style>
 
@@ -32,8 +32,17 @@
       "esri/tasks/support/LinearUnit",
       "esri/tasks/support/FeatureSet",
       "esri/views/MapView",
+      "esri/layers/MapImageLayer",
       "dojo/domReady!"
-    ], function(Map, GraphicsLayer, Graphic, Point, Geoprocessor, LinearUnit, FeatureSet, MapView){
+    ], function(Map, GraphicsLayer, Graphic, Point, Geoprocessor, LinearUnit, FeatureSet, MapView, MapImageLayer){
+
+
+        //Layers
+        var areaOfInterestURL = "http://geoserver2.byu.edu/arcgis/rest/services/3_Toed_Sloth/BoundaryAndStreams/MapServer"
+        var areaOfInterest = new MapImageLayer({
+            url: areaOfInterestURL,
+            title: "Area of Interest"
+        });
 
         //a map with basemap
         var map = new Map({
@@ -47,8 +56,8 @@
         var view = new MapView({
         container: "viewDiv",
         map: map,
-        center: [-111.643245, 40.324884],
-        zoom: 11
+        center: [-111.52, 40.5],
+        zoom: 8
         });
 
         // symbol for input point
@@ -109,6 +118,8 @@
               featureSet.features = inputGraphicContainer;
         }
 
+        map.add(areaOfInterest);
+
         // What happens when you click the "Delineate Watershed" Button
         $(document).ready(function () {
             $("#delineate").click(function () {
@@ -144,15 +155,29 @@
             var polygon_feature = data.value.features[0];
 
             var avgdepth = data.value.features[0].attributes['Mean'];
-            console.log(avgdepth)
             var area = data.value.features[0].attributes['SHAPE_Area'];
-            console.log(area)
-            var volAcFt = avgdepth*area/1000/1233.48;
-            console.log(volAcFt)
+            var volAcFt = Math.round(avgdepth*area/1000/1233.48);
+            var areaSqMi = Math.round(area/2589988.11*10)/10;
+            var depthRound = Math.round(avgdepth*10)/10;
 
             polygon_feature.symbol = fillSymbol;
             graphicsLayer.add(polygon_feature);
-            alert("Snowmelt Volume = " + volAcFt)
+
+            $("resultsHeader").html("<h3 style='text-align: center'></h3>");
+            var results_valueHeader = document.getElementById("resultsHeader");
+            results_valueHeader.innerText = "Results:"
+
+            $("#resultsArea").html("<h5 style='text-align: center'></h5>");
+            var results_valueArea = document.getElementById("resultsArea");
+            results_valueArea.innerText = "Watershed Area [sq mi] = " + areaSqMi
+
+            $("#resultsDepth").html("<h5 style='text-align: center'></h5>");
+            var results_valueDepth = document.getElementById("resultsDepth");
+            results_valueDepth.innerText = "Avg. Snowmelt Depth [mm] = " + depthRound
+
+            $("#resultsVol").html("<h5 style='text-align: center'></h5>");
+            var results_valueVol = document.getElementById("resultsVol");
+            results_valueVol.innerText = "Snowmelt Volume [ac-ft] = " + volAcFt
         }
 
         function drawResultErrBack(err) {
@@ -166,12 +191,16 @@
         function errBack(err) {
             console.log("gp error: ", err);
         }
+
+
+
     });
 </script>
 
-  <h1>Delineate Watershed</h1>
-  <h3>*Click on the Provo River.</h3>
-  <div id="viewDiv"></div>
+    <h1>Delineate Watershed & Calculate Snowmelt</h1>
+    <h5>1. Click on the map to determine the watershed outlet point.</h5>
+    <h5>2. Click on the "Delineate & Calculate" button.</h5>
+    <div id="viewDiv"></div>
 
 
 {% endblock %}

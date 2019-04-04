@@ -28,11 +28,16 @@
   {# Buttons for Map Page #}
   {% if request.path == map_url %}
     <br>
-    <button id="delineate" type="button">Delineate Watershed</button>
+    <button id="delineate" type="button" class="btn btn-dark center-block" style="background-color:#123448; color:#FFFFFF">Delineate & Calculate</button>
 
   {% endif %}
 
   <div id="loadingstuff"></div>
+  <br>
+  <div id="resultsHeader" ><h4></h4></div>
+  <div id="resultsArea"></div>
+  <div id="resultsDepth"></div>
+  <div id="resultsVol"></div>
 
 
 
