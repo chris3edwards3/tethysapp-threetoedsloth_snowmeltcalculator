@@ -71,18 +71,34 @@
 
 {# Use the after_app_content block for modals #}
 {% block after_app_content %}
-  <!-- Example Modal -->
   <div class="modal fade" id="help-modal" tabindex="-1" role="dialog" aria-labelledby="help-modal-label">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h5 class="modal-title" id="help-modal-label"> Help </h5>
+          <h5 class="modal-title" id="help-modal-label">Help</h5>
         </div>
         <div class="modal-body">
-          <p>The purpose of this app is to generate a watershed based for the area selected and return the watershed area, average snowmelt depth and snowmelt volume for the given area. </p>
-          <p>Ever have trouble using a modal in a Tethys app? Use the <code>after_app_content</code> block for modal content to allow them to function properly. See: <a href="https://getbootstrap.com/javascript/#modals">Bootstrap Modals</a></p>
-          <p>Add tooltips to any element by adding the <code>data-toggle</code>, <code>data-placement</code>, and <code>title</code> attributes to the button. See: <a href="https://getbootstrap.com/javascript/#tooltips">Bootstrap Tooltips</a></p>
+          <p>
+          The purpose of this app is to delineate a watershed based on user selection in the given area and return watershed area, average snow depth and total snowmelt volume. Data calculations are based on snowmelt data from 2018.
+          </p>
+          <p>
+          Instructions:
+          </p>
+          <p>
+          1.) First click somewhere within the green boundary. A blue circle will appear to indicate your selection point. Once satisfied with your selection click the Delineate & Calculate button to the right of the map.
+          </p>
+          <img src="https://raw.githubusercontent.com/ANFz/ANFz.github.io/master/snip1.jpg">
+          <p>
+          *Note: if the app navigation panel is not visible click the triple line icon in the top right.
+          </p>
+          <p>
+          2.) After a short delay the watershed will be delineated by the app and displayed on the map by a light blue polygon. Data results will be displayed under the Delineate & Calculate Button.
+          </p>
+          <img src="https://raw.githubusercontent.com/ANFz/ANFz.github.io/master/snip4.JPG">
+          <p>
+          *Note: if the app delineates a watershed too small it cannot calculate the data and a different location will need to be selected.
+          </p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
