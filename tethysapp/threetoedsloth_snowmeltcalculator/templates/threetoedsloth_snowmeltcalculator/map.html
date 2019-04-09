@@ -81,7 +81,7 @@
             };
 
         // Geoprocessing service url
-        var gpUrl = "http://geoserver2.byu.edu/arcgis/rest/services/3_Toed_Sloth/Snowmelt_Calculator_Temp/GPServer/Snowmelt_Calculator_Temp";
+        var gpUrl = "http://geoserver2.byu.edu/arcgis/rest/services/3_Toed_Sloth/Snowmelt_Calculator_2018/GPServer/Snowmelt_Calculator_Year";
 
         // create a new Geoprocessor
         var gp = new Geoprocessor(gpUrl);
@@ -141,6 +141,25 @@
                 "Input_Pour_Point": featureSet,
                 };
                 gp.submitJob(params).then(completeCallback, errBack, statusCallback);
+
+
+                // Clear the "Results" Text, if it exists.
+                $("resultsHeader").html("<h3 style='text-align: center'></h3>");
+                var results_valueHeader = document.getElementById("resultsHeader");
+                results_valueHeader.innerText = ""
+
+                $("#resultsArea").html("<h5 style='text-align: center'></h5>");
+                var results_valueArea = document.getElementById("resultsArea");
+                results_valueArea.innerText = ""
+
+                $("#resultsDepth").html("<h5 style='text-align: center'></h5>");
+                var results_valueDepth = document.getElementById("resultsDepth");
+                results_valueDepth.innerText = ""
+
+                $("#resultsVol").html("<h5 style='text-align: center'></h5>");
+                var results_valueVol = document.getElementById("resultsVol");
+                results_valueVol.innerText = ""
+
             }
         }
 

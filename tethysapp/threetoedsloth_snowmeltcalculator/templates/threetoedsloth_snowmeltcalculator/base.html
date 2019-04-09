@@ -8,14 +8,12 @@
   <div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Help">
     <a data-toggle="modal" data-target="#help-modal"><span class="glyphicon glyphicon-question-sign"></span></a>
   </div>
-{% endblock %}
-
-
-{% block header_buttons %}
   <div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Info">
     <a data-toggle="modal" data-target="#info-modal"><span class="glyphicon glyphicon-question-sign"></span></a>
   </div>
+
 {% endblock %}
+
 
 {% block app_icon %}
   {# The path you provided in your app.py is accessible through the tethys_app.icon context variable #}
@@ -111,10 +109,7 @@
       </div>
     </div>
   </div>
-{% endblock %}
 
-{# Use the after_app_content block for modals #}
-{% block after_app_content %}
   <div class="modal fade" id="info-modal" tabindex="-1" role="dialog" aria-labelledby="help-modal-label">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
