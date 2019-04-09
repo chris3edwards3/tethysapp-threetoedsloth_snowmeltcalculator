@@ -2,9 +2,7 @@
 {% load tethys_gizmos %}
 
 {% block header_buttons %}
-  <div class="header-button glyphicon-button" data-toggle="tooltip" data-placement="bottom" title="Help">
-    <a data-toggle="modal" data-target="#help-modal"><span class="glyphicon glyphicon-question-sign"></span></a>
-  </div>
+
 {% endblock %}
 
 {% block app_content %}
@@ -69,45 +67,6 @@
 
 {% endblock %}
 
-{# Use the after_app_content block for modals #}
-{% block after_app_content %}
-  <div class="modal fade" id="help-modal" tabindex="-1" role="dialog" aria-labelledby="help-modal-label">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h5 class="modal-title" id="help-modal-label">Help</h5>
-        </div>
-        <div class="modal-body">
-          <p>
-          The purpose of this app is to delineate a watershed based on user selection in the given area and return watershed area, average snow depth and total snowmelt volume. Data calculations are based on snowmelt data from 2018.
-          </p>
-          <p>
-          App Instructions:
-          </p>
-          <p>
-          1.) First click somewhere within the green boundary. A blue circle will appear to indicate your selection point. Once satisfied with your selection click the Delineate & Calculate button to the right of the map.
-          </p>
-          <img src="https://raw.githubusercontent.com/ANFz/ANFz.github.io/master/snip1.jpg">
-          <p>
-          *Note: if the app navigation panel is not visible click the triple line icon in the top right.
-          </p>
-          <p>
-          2.) After a short delay the watershed will be delineated by the app and displayed on the map by a light blue polygon. Data results will be displayed under the Delineate & Calculate Button.
-          </p>
-          <img src="https://raw.githubusercontent.com/ANFz/ANFz.github.io/master/snip4.JPG">
-          <p>
-          *Note: if the app delineates a watershed too small it cannot calculate the data and a different location will need to be selected.
-          </p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
-        </div>
-      </div>
-    </div>
-  </div>
-{% endblock %}
 
 {% block app_actions %}
 
