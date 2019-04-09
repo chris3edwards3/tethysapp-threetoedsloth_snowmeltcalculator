@@ -32,9 +32,10 @@
 
   <li class="title">App Navigation</li>
   <li class="{% if request.path == home_url %}active{% endif %}"><a href="{{ home_url }}">Home</a></li>
-  <li class="{% if request.path == proposal_url %}active{% endif %}"><a href="{{ proposal_url }}">Proposal</a></li>
-  <li class="{% if request.path == mockup_url %}active{% endif %}"><a href="{{ mockup_url }}">Mockup</a></li>
   <li class="{% if request.path == map_url %}active{% endif %}"><a href="{{ map_url }}">Map</a></li>
+  <li class="{% if request.path == proposal_url %}active{% endif %}"><a href="{{ proposal_url }}">Initial Proposal</a></li>
+  <li class="{% if request.path == mockup_url %}active{% endif %}"><a href="{{ mockup_url }}">Initial Mockup</a></li>
+
 
   {# Buttons for Map Page #}
   {% if request.path == map_url %}
