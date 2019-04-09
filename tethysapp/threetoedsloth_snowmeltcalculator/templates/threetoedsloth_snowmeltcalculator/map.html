@@ -29,16 +29,30 @@
       "esri/tasks/support/FeatureSet",
       "esri/views/MapView",
       "esri/layers/MapImageLayer",
+      "esri/widgets/LayerList",
       "dojo/domReady!"
-    ], function(Map, GraphicsLayer, Graphic, Point, Geoprocessor, LinearUnit, FeatureSet, MapView, MapImageLayer){
+    ], function(Map, GraphicsLayer, Graphic, Point, Geoprocessor, LinearUnit, FeatureSet, MapView, MapImageLayer, LayerList){
 
 
         //Layers
-        var areaOfInterestURL = "http://geoserver2.byu.edu/arcgis/rest/services/3_Toed_Sloth/BoundaryAndStreams/MapServer"
-        var areaOfInterest = new MapImageLayer({
-            url: areaOfInterestURL,
-            title: "Area of Interest"
+        var snomURL = "http://geoserver2.byu.edu/arcgis/rest/services/3_Toed_Sloth/2018_Water_Year_Snowmelt/MapServer"
+        var snom = new MapImageLayer({
+            url: snomURL,
+            title: "2018 Snowmelt"
         });
+
+        var streamsURL = "http://geoserver2.byu.edu/arcgis/rest/services/3_Toed_Sloth/Streams/MapServer"
+        var streams = new MapImageLayer({
+            url: streamsURL,
+            title: "Streams"
+        });
+
+        var domainBoundaryURL = "http://geoserver2.byu.edu/arcgis/rest/services/3_Toed_Sloth/Domain_Boundary/MapServer"
+        var domainBoundary = new MapImageLayer({
+            url: domainBoundaryURL,
+            title: "Domain Boundary"
+        });
+
 
         //a map with basemap
         var map = new Map({
@@ -46,7 +60,7 @@
         });
 
         //a graphics layer to show input point and output polygon
-        var graphicsLayer = new GraphicsLayer();
+        var graphicsLayer = new GraphicsLayer({title: "User Input"});
         map.add(graphicsLayer);
 
         var view = new MapView({
@@ -55,6 +69,17 @@
         center: [-111.52, 40.5],
         zoom: 8
         });
+
+
+        //Add an option to toggle layers on and off
+        const layerList = new LayerList({
+            view: view,
+        });
+
+        view.ui.add(layerList, {
+            position: "bottom-left",
+        });
+
 
         // symbol for input point
         var markerSymbol = {
@@ -66,6 +91,7 @@
               }
             };
 
+
         // symbol for watershed boundary
         var fillSymbol = {
               type: "simple-fill", // autocasts as new SimpleFillSymbol()
@@ -75,6 +101,7 @@
                 width: 1
               }
             };
+
 
         // Geoprocessing service url
         var gpUrl = "http://geoserver2.byu.edu/arcgis/rest/services/3_Toed_Sloth/Snowmelt_Calculator_2018/GPServer/Snowmelt_Calculator_Year";
@@ -114,7 +141,12 @@
               featureSet.features = inputGraphicContainer;
         }
 
-        map.add(areaOfInterest);
+        //Add layers to the map.
+
+        map.add(snom);
+        map.add(streams);
+        map.add(domainBoundary);
+
 
         // What happens when you click the "Delineate Watershed" Button
         $(document).ready(function () {
