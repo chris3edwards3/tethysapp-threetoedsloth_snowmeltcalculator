@@ -38,7 +38,9 @@
         var snomURL = "http://geoserver2.byu.edu/arcgis/rest/services/3_Toed_Sloth/2018_Water_Year_Snowmelt/MapServer"
         var snom = new MapImageLayer({
             url: snomURL,
-            title: "2018 Snowmelt"
+            title: "2018 Snowmelt",
+            visible: false,
+            opacityslider: true
         });
 
         var streamsURL = "http://geoserver2.byu.edu/arcgis/rest/services/3_Toed_Sloth/Streams/MapServer"
@@ -73,7 +75,7 @@
 
         //Add an option to toggle layers on and off
         const layerList = new LayerList({
-            view: view,
+            view: view
         });
 
         view.ui.add(layerList, {

@@ -64,19 +64,21 @@
   <h1>Welcome to the Snowmelt Calculator</h1>
   <h4>Team: Three-Toed Sloth</h4>
   <h4>Team Members: Chris Edwards, Alex Fisher, Jake Lewis</h4>
-  <p>About: This App delineates a watershed and then calculates the amount of snowmelt in that watershed for the 2018 water year.</p>
-  <p>Data: The watersheds are delineated based on a 30-meter DEM. The snowmelt calculation is based on the NLDAS model.
+  <p><b>About:</b> This App delineates a watershed and then calculates the amount of snowmelt in that watershed for the 2018 water year.</p>
+  <p><b>Data:</b> The watersheds are delineated based on a 30-meter DEM. The snowmelt calculation is based on the NLDAS model
       (see info button for more information).</p>
-  <p>Area of interest: From the 8-digit watershed boundaries defined by the NRCS, we chose 5 for our domain.</p>
-  <p>Instructions: On the "Map" page, click a point to delineate a watershed (see help button for details).</p>
+  <p><b>Domain:</b> 5 watersheds from the 8-digit watershed boundaries defined by the NRCS.</p>
+  <p><b>Geprocessing workflow:</b> (1) User selects point. (2) The cell with the highest flow accumulation within 300-m is slected as the outlet.
+                                  (3) The watershed is delineated. (4) Zonal Statistics is used to calculated the average snowmelt over the watershed boundary.</p>
+  <p><b>Instructions:</b> On the "Map" page, click a point to delineate a watershed (see help button for details).</p>
 
   <br>
   <br>
-  <center>
+
     <iframe width="560" height="315" src="https://www.youtube.com/embed/pApFztL-lsI" frameborder="0"
             allow="accelerometer; autoplay=0; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen></iframe>
-  </center>
+
 {% endblock %}
 
 
