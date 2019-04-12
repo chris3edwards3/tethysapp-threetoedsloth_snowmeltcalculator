@@ -194,7 +194,7 @@
 
 
                 // Clear the "Results" Text, if it exists.
-                $("resultsHeader").html("<h3 style='text-align: center'></h3>");
+                $("resultsHeader").html("<h3></h3>");
                 var results_valueHeader = document.getElementById("resultsHeader");
                 results_valueHeader.innerText = ""
 
@@ -232,11 +232,11 @@
             polygon_feature.symbol = fillSymbol;
             graphicsLayer.add(polygon_feature);
 
-            $("resultsHeader").html("<h3 style='text-align: center'></h3>");
+            $("resultsHeader").html("<h3></h3>");
             var results_valueHeader = document.getElementById("resultsHeader");
             results_valueHeader.innerText = "Results:"
 
-            $("#resultsArea").html("<h5 style='text-align: center'></h5>");
+            $("#resultsArea").html("<h5></h5>");
             var results_valueArea = document.getElementById("resultsArea");
             results_valueArea.innerText = "Watershed Area [sq mi] = " + areaSqMi
 
