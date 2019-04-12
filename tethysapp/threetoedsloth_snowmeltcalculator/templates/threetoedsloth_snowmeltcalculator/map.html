@@ -30,8 +30,10 @@
       "esri/views/MapView",
       "esri/layers/MapImageLayer",
       "esri/widgets/LayerList",
+      "esri/widgets/ScaleBar",
+      "esri/widgets/Compass",
       "dojo/domReady!"
-    ], function(Map, GraphicsLayer, Graphic, Point, Geoprocessor, LinearUnit, FeatureSet, MapView, MapImageLayer, LayerList){
+    ], function(Map, GraphicsLayer, Graphic, Point, Geoprocessor, LinearUnit, FeatureSet, MapView, MapImageLayer, LayerList, ScaleBar, Compass){
 
 
         //Layers
@@ -80,6 +82,24 @@
 
         view.ui.add(layerList, {
             position: "bottom-left",
+        });
+
+
+        //Add a scalebar
+        var scaleBar = new ScaleBar({
+          view: view
+        });
+        view.ui.add(scaleBar, {
+          position: "bottom-right"
+        });
+
+
+        //Add a North Arrow
+        var northArrow = new Compass({
+          view: view
+        });
+        view.ui.add(northArrow, {
+          position: "top-right"
         });
 
 
